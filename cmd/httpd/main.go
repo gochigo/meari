@@ -16,6 +16,7 @@ func echoHandler(c echo.Context) error {
 			text = fmt.Sprintf("%s\n%s: %s", text, key, line)
 		}
 	}
+	fmt.Printf("standard log: %v\n", text)
 	return c.String(http.StatusOK, text)
 }
 
@@ -32,6 +33,7 @@ func main() {
 
 	e.GET("/help/:cmd", helpHandler)
 	e.GET("/echo", echoHandler)
+	e.POST("/echo", echoHandler)
 
 	e.Logger.Fatal(e.Start(":80"))
 }
