@@ -33,5 +33,5 @@ func main() {
 	e.GET("/help/:cmd", helpHandler)
 	e.GET("/echo", echoHandler)
 
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":80"))
 }

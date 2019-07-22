@@ -5,3 +5,6 @@ run:
 
 build:
 	go build ./cmd/httpd
+
+image:
+	sudo docker build -t meari:latest .
