@@ -1,4 +1,6 @@
 
+default:
+	@echo "rules: run, build, and image"
 
 run:
 	go run cmd/httpd/main.go
