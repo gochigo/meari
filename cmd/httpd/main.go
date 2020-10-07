@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/labstack/echo"
+	getopt "github.com/pborman/getopt/v2"
 )
 
 func getInfo(c echo.Context) string {
@@ -54,7 +56,36 @@ func helpHandler(c echo.Context) error {
 	return c.String(http.StatusOK, cmd)
 }
 
+// Options is a structure for storing runtime options.
+type Options struct {
+	port string
+}
+
+func getOptions() *Options {
+	help := false
+
+	options := &Options{
+		port: "8080",
+	}
+
+	getopt.FlagLong(&options.port, "port", 'p', "tcp port number (default is 8080)")
+	getopt.FlagLong(&help, "help", 'h', "help")
+
+	getopt.Parse()
+
+	if help {
+		getopt.Usage()
+		return nil
+	}
+	return options
+}
+
 func main() {
+	opts := getOptions()
+	if opts == nil {
+		os.Exit(0)
+	}
+
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
@@ -66,5 +97,6 @@ func main() {
 	e.GET("/login", echoHandler)
 	e.POST("/login", loginHandler)
 
-	e.Logger.Fatal(e.Start(":80"))
+	address := fmt.Sprintf(":%v", opts.port)
+	e.Logger.Fatal(e.Start(address))
 }
