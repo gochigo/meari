@@ -2,7 +2,7 @@
 FROM scinix/golang
 
 RUN \
-    go get github.com/gochigo/meari/cmd/httpd ;\
+    go get github.com/sio4/meari/cmd/meari ;\
     true
 
-CMD /go/bin/httpd
+CMD /go/bin/meari

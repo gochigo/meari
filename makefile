@@ -3,10 +3,10 @@ default:
 	@echo "rules: run, build, and image"
 
 run:
-	go run cmd/httpd/main.go
+	go run cmd/meari/main.go
 
 build:
-	go build ./cmd/httpd
+	go build ./cmd/meari
 
 image:
 	sudo docker build -t meari:latest .
